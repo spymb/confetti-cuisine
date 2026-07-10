@@ -1,0 +1,16 @@
+{
+  "name": "confetti-cuisine",
+  "version": "1.0.0",
+  "description": "Confetti Cuisine — a static cooking school website built with TypeScript and Node.js native modules",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}
