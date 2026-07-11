@@ -1,16 +1,26 @@
 {
   "name": "confetti-cuisine",
-  "version": "1.0.0",
-  "description": "Confetti Cuisine — a static cooking school website built with TypeScript and Node.js native modules",
+  "version": "2.0.0",
+  "description": "Confetti Cuisine — a cooking school website built with Express 5.x and EJS",
+  "packageManager": "pnpm@11.11.0",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "cross-env NODE_ENV=production node dist/main.js"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^22.0.0",
+    "cross-env": "^10.1.0",
     "tsx": "^4.0.0",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "morgan": "^1.11.0"
   }
 }

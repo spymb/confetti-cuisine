@@ -1,0 +1,19 @@
+<%- include('_head') %>
+
+<h2 class="page-title">我们的课程</h2>
+<p style="margin-bottom: 1.5rem; color: #6b4e4e;">
+  探索丰富多彩的实操烹饪课程，所有级别均可报名！
+</p>
+
+<div class="courses">
+  <% courses.forEach(function(course) { %>
+    <article class="course-card">
+      <h3><%= course.title %></h3>
+      <p><%= course.description %></p>
+      <span class="duration"><%= course.duration %></span>
+      <span class="cost">¥<%= course.cost %></span>
+    </article>
+  <% }); %>
+</div>
+
+<%- include('_foot') %>

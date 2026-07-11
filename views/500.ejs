@@ -1,0 +1,12 @@
+<%- include('_head') %>
+
+<section class="error-page">
+  <h1>500</h1>
+  <p><%= message %></p>
+  <% if (stack) { %>
+    <pre style="text-align: left; margin-top: 1rem; font-size: 0.85rem; color: #999; max-height: 200px; overflow-y: auto;"><%= stack %></pre>
+  <% } %>
+  <a href="/" class="back-home">返回首页</a>
+</section>
+
+<%- include('_foot') %>

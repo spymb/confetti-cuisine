@@ -154,6 +154,15 @@ main {
   font-weight: 500;
 }
 
+.course-card .cost {
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #b33c2b;
+}
+
 .page-title {
   font-size: 2rem;
   color: #b33c2b;
