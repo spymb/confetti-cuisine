@@ -4,6 +4,7 @@ import {
   getCourses,
   getContact,
   postSubscribe,
+  getSubscribers,
 } from '../controllers/homeController.js';
 
 const router = Router();
@@ -18,5 +19,6 @@ router.get('/contact', getContact);
 /* ──────────── POST 路由 ──────────── */
 
 router.post('/subscribe', postSubscribe);
+router.get('/subscribers', getSubscribers);
 
 export default router;

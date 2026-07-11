@@ -6,27 +6,34 @@
 </p>
 
 <form class="contact-form" action="/subscribe" method="POST">
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div style="background: #fff0f0; color: #b33c2b; border: 1px solid #f5c6cb; padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 1rem;">
+      ⚠️ <%= error %>
+    </div>
+  <% } %>
+
   <div class="form-group">
     <label for="name">姓名</label>
-    <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+    <input type="text" id="name" name="name"
+           value="<%= typeof formData !== 'undefined' && formData.name ? formData.name : '' %>"
+           placeholder="请输入您的姓名" required>
   </div>
 
   <div class="form-group">
     <label for="email">邮箱</label>
-    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+    <input type="email" id="email" name="email"
+           value="<%= typeof formData !== 'undefined' && formData.email ? formData.email : '' %>"
+           placeholder="your@email.com" required>
   </div>
 
   <div class="form-group">
-    <label for="subject">主题</label>
-    <input type="text" id="subject" name="subject" placeholder="我们有什么可以帮您？">
+    <label for="zipCode">邮编（选填）</label>
+    <input type="text" id="zipCode" name="zipCode"
+           value="<%= typeof formData !== 'undefined' && formData.zipCode ? formData.zipCode : '' %>"
+           placeholder="5位数字，如 10001" pattern="\d{5}" maxlength="5">
   </div>
 
-  <div class="form-group">
-    <label for="message">留言</label>
-    <textarea id="message" name="message" placeholder="告诉我们您的烹饪兴趣……" required></textarea>
-  </div>
-
-  <button type="submit">发送消息</button>
+  <button type="submit">订阅</button>
 </form>
 
 <aside class="contact-info">
@@ -34,9 +41,6 @@
   <p><strong>地址：</strong> 风味小镇意面路 123 号</p>
   <p><strong>电话：</strong> (555) 123-4567</p>
   <p><strong>邮箱：</strong> hello@confetti-cuisine.example.com</p>
-  <p style="margin-top: 0.75rem; font-style: italic; color: #999;">
-    提示：表单提交为演示功能，数据不会被实际存储。
-  </p>
 </aside>
 
 <%- include('_foot') %>

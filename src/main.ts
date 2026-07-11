@@ -1,7 +1,10 @@
+import 'dotenv/config';
 import path from 'node:path';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import router from './routes/index.js';
 import { notFound, internalError } from './controllers/errorController.js';
 
@@ -57,7 +60,26 @@ app.use(router);
 app.use(notFound); // 全路由未命中 → 404
 app.use(internalError); // 任何错误（含 Express 5 自动传播的异步错误）→ 500
 
-/* ──────────── 服务器启动 ──────────── */
+/* ──────────── MongoDB 连接与服务器启动 ──────────── */
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+let uri = MONGODB_URI;
+
+// 未配置外部 MongoDB 时，自动启动内存实例
+if (!uri) {
+  const mongod = await MongoMemoryServer.create();
+  uri = mongod.getUri();
+  console.log('🧪 使用内存 MongoDB 实例');
+}
+
+try {
+  await mongoose.connect(uri);
+  console.log('✅ MongoDB connected');
+} catch (err) {
+  console.error('❌ MongoDB 连接失败，进程即将退出:', err);
+  process.exit(1);
+}
 
 app.listen(PORT, () => {
   console.log(`\n🍳 缤纷厨房已启动 → http://localhost:${PORT}`);

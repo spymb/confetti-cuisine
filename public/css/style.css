@@ -272,6 +272,35 @@ main {
   background-color: #922b1f;
 }
 
+/* ── 订阅者表格 ── */
+.subscribers-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subscribers-table thead {
+  background-color: #b33c2b;
+  color: #fff;
+}
+
+.subscribers-table th,
+.subscribers-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.subscribers-table tbody tr:nth-child(even) {
+  background-color: #fefaf5;
+}
+
+.subscribers-table tbody tr:hover {
+  background-color: #fef0ed;
+}
+
 /* ── 响应式 ── */
 @media (max-width: 600px) {
   nav ul {
@@ -294,5 +323,14 @@ main {
 
   main {
     margin: 1rem auto;
+  }
+
+  .subscribers-table {
+    font-size: 0.85rem;
+  }
+
+  .subscribers-table th,
+  .subscribers-table td {
+    padding: 0.5rem 0.75rem;
   }
 }
