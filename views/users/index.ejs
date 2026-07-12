@@ -1,0 +1,54 @@
+<%- include('../_head') %>
+
+<div class="toolbar">
+  <h2 class="page-title">用户管理</h2>
+  <a href="/admin/users/new" class="btn btn-primary">＋ 新建用户</a>
+</div>
+
+<% if (users.length === 0) { %>
+  <p style="color: #6b4e4e;">暂无用户。</p>
+<% } else { %>
+  <table class="crud-table">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>邮箱</th>
+        <th>已报名课程</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(function(u) { %>
+        <tr>
+          <td><a href="/admin/users/<%= u._id %>"><%= u.name %></a></td>
+          <td><%= u.email %></td>
+          <td>
+            <% if (u.enrolledCourses && u.enrolledCourses.length) { %>
+              <%= u.enrolledCourses.map(function(c) { return c.title; }).join('、') %>
+            <% } else { %>
+              —
+            <% } %>
+          </td>
+          <td>
+            <div class="action-group">
+              <a href="/admin/users/<%= u._id %>" class="btn btn-view">查看</a>
+              <a href="/admin/users/<%= u._id %>/edit" class="btn btn-edit">编辑</a>
+              <button onclick="remove('<%= u._id %>')" class="btn btn-delete">删除</button>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
+
+<script>
+async function remove(id) {
+  if (!confirm('确定要删除该用户吗？')) return;
+  var resp = await fetch('/admin/users/' + id, { method: 'DELETE' });
+  var result = await resp.json();
+  if (result.ok) window.location.href = result.redirect;
+}
+</script>
+
+<%- include('../_foot') %>

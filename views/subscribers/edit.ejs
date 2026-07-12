@@ -1,0 +1,55 @@
+<%- include('../_head') %>
+
+<h2 class="page-title">编辑订阅者</h2>
+
+<div id="errorBox" class="error-box" style="display:none"></div>
+
+<form class="crud-form" id="editForm">
+  <div class="form-group">
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name"
+           value="<%= subscriber.name %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">邮箱</label>
+    <input type="email" id="email" name="email"
+           value="<%= subscriber.email %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="zipCode">邮编（选填）</label>
+    <input type="text" id="zipCode" name="zipCode"
+           value="<%= subscriber.zipCode || '' %>" placeholder="5位数字" maxlength="5">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="/admin/subscribers/<%= subscriber._id %>" class="btn btn-cancel">取消</a>
+  </div>
+</form>
+
+<script>
+document.getElementById('editForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  const resp = await fetch('/admin/subscribers/<%= subscriber._id %>', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const result = await resp.json();
+  if (result.ok) {
+    window.location.href = result.redirect;
+  } else if (result.errors) {
+    var box = document.getElementById('errorBox');
+    box.style.display = 'block';
+    box.innerHTML = result.errors.map(function(e) {
+      return '<p>' + (e.field ? '<strong>' + e.field + '</strong>：' : '') + e.message + '</p>';
+    }).join('');
+  }
+});
+</script>
+
+<%- include('../_foot') %>

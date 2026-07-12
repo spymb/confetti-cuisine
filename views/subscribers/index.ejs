@@ -1,0 +1,50 @@
+<%- include('../_head') %>
+
+<div class="toolbar">
+  <h2 class="page-title">订阅者管理</h2>
+  <a href="/admin/subscribers/new" class="btn btn-primary">＋ 新建订阅者</a>
+</div>
+
+<% if (subscribers.length === 0) { %>
+  <p style="color: #6b4e4e;">暂无订阅者。</p>
+<% } else { %>
+  <table class="crud-table">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>邮箱</th>
+        <th>邮编</th>
+        <th>订阅时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% subscribers.forEach(function(sub) { %>
+        <tr>
+          <td><a href="/admin/subscribers/<%= sub._id %>"><%= sub.name %></a></td>
+          <td><%= sub.email %></td>
+          <td><%= sub.zipCode || '—' %></td>
+          <td><%= new Date(sub.createdAt).toLocaleString('zh-CN') %></td>
+          <td>
+            <div class="action-group">
+              <a href="/admin/subscribers/<%= sub._id %>" class="btn btn-view">查看</a>
+              <a href="/admin/subscribers/<%= sub._id %>/edit" class="btn btn-edit">编辑</a>
+              <button onclick="remove('<%= sub._id %>')" class="btn btn-delete">删除</button>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
+
+<script>
+async function remove(id) {
+  if (!confirm('确定要删除该订阅者吗？')) return;
+  var resp = await fetch('/admin/subscribers/' + id, { method: 'DELETE' });
+  var result = await resp.json();
+  if (result.ok) window.location.href = result.redirect;
+}
+</script>
+
+<%- include('../_foot') %>

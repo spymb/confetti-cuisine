@@ -1,0 +1,71 @@
+<%- include('../_head') %>
+
+<h2 class="page-title">新建用户</h2>
+
+<div id="errorBox" class="error-box" style="display:none"></div>
+
+<form class="crud-form" id="createForm">
+  <div class="form-group">
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name"
+           placeholder="请输入姓名" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">邮箱</label>
+    <input type="email" id="email" name="email"
+           placeholder="your@email.com" required>
+  </div>
+
+  <div class="form-group">
+    <label for="enrolledCourses">已报名课程</label>
+    <select id="enrolledCourses" name="enrolledCourses" multiple style="min-height: 120px;">
+      <% allCourses.forEach(function(c) { %>
+        <option value="<%= c._id %>"><%= c.title %></option>
+      <% }); %>
+    </select>
+    <small style="color: #999;">按住 Ctrl（Mac 上 Cmd）可多选</small>
+  </div>
+
+  <div class="form-group">
+    <label for="subscriberProfile">关联订阅者</label>
+    <select id="subscriberProfile" name="subscriberProfile">
+      <option value="">— 无 —</option>
+      <% allSubscribers.forEach(function(s) { %>
+        <option value="<%= s._id %>"><%= s.name %>（<%= s.email %>）</option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="/admin/users" class="btn btn-cancel">取消</a>
+  </div>
+</form>
+
+<script>
+document.getElementById('createForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  var data = Object.fromEntries(formData.entries());
+  // <select multiple> 需要用 getAll 获取数组，fromEntries 只取最后一个值
+  data.enrolledCourses = formData.getAll('enrolledCourses');
+  var resp = await fetch('/admin/users', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  var result = await resp.json();
+  if (result.ok) {
+    window.location.href = result.redirect;
+  } else if (result.errors) {
+    var box = document.getElementById('errorBox');
+    box.style.display = 'block';
+    box.innerHTML = result.errors.map(function(e) {
+      return '<p>' + (e.field ? '<strong>' + e.field + '</strong>：' : '') + e.message + '</p>';
+    }).join('');
+  }
+});
+</script>
+
+<%- include('../_foot') %>

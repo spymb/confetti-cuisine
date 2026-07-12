@@ -1,0 +1,36 @@
+<%- include('../_head') %>
+
+<div class="detail-card">
+  <h1><%= course.title %></h1>
+
+  <dl>
+    <dt>时长</dt>
+    <dd><%= course.duration %></dd>
+    <dt>价格</dt>
+    <dd>¥<%= course.cost %></dd>
+    <dt>创建时间</dt>
+    <dd><%= new Date(course.createdAt).toLocaleString('zh-CN') %></dd>
+    <dt>更新时间</dt>
+    <dd><%= new Date(course.updatedAt).toLocaleString('zh-CN') %></dd>
+  </dl>
+
+  <h3 style="margin-top: 1.5rem; color: #b33c2b;">课程描述</h3>
+  <p style="margin-top: 0.5rem; line-height: 1.8;"><%= course.description %></p>
+
+  <div class="detail-actions">
+    <a href="/admin/courses/<%= course._id %>/edit" class="btn btn-edit">编辑</a>
+    <button onclick="remove('<%= course._id %>')" class="btn btn-delete">删除</button>
+    <a href="/admin/courses" class="btn btn-cancel">返回列表</a>
+  </div>
+</div>
+
+<script>
+async function remove(id) {
+  if (!confirm('确定要删除该课程吗？')) return;
+  var resp = await fetch('/admin/courses/' + id, { method: 'DELETE' });
+  var result = await resp.json();
+  if (result.ok) window.location.href = result.redirect;
+}
+</script>
+
+<%- include('../_foot') %>

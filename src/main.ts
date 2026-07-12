@@ -33,6 +33,8 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrcAttr: ["'unsafe-inline'"],
       },
     },
   }),
@@ -48,6 +50,7 @@ app.set('views', path.resolve(process.cwd(), 'views'));
 
 /* ── 请求体解析 ── */
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 /* ── 静态资源 ── */
 // 保持 /public/* 前缀，与现有 CSS <link> 引用路径完全兼容

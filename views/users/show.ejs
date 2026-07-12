@@ -1,0 +1,73 @@
+<%- include('../_head') %>
+
+<div class="detail-card">
+  <h1><%= user.name %></h1>
+
+  <dl>
+    <dt>邮箱</dt>
+    <dd><%= user.email %></dd>
+    <dt>注册时间</dt>
+    <dd><%= new Date(user.createdAt).toLocaleString('zh-CN') %></dd>
+    <dt>更新时间</dt>
+    <dd><%= new Date(user.updatedAt).toLocaleString('zh-CN') %></dd>
+  </dl>
+</div>
+
+<div class="detail-card">
+  <h2 style="color: #b33c2b; margin-bottom: 1rem;">已报名课程</h2>
+  <% if (user.enrolledCourses && user.enrolledCourses.length) { %>
+    <table class="crud-table">
+      <thead>
+        <tr>
+          <th>课程名称</th>
+          <th>时长</th>
+          <th>价格</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user.enrolledCourses.forEach(function(c) { %>
+          <tr>
+            <td><%= c.title %></td>
+            <td><%= c.duration %></td>
+            <td>¥<%= c.cost %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p style="color: #6b4e4e;">暂无报名课程。</p>
+  <% } %>
+</div>
+
+<div class="detail-card">
+  <h2 style="color: #b33c2b; margin-bottom: 1rem;">订阅信息</h2>
+  <% if (user.subscriberProfile) { %>
+    <dl>
+      <dt>姓名</dt>
+      <dd><%= user.subscriberProfile.name %></dd>
+      <dt>邮箱</dt>
+      <dd><%= user.subscriberProfile.email %></dd>
+      <dt>邮编</dt>
+      <dd><%= user.subscriberProfile.zipCode || '—' %></dd>
+    </dl>
+  <% } else { %>
+    <p style="color: #6b4e4e;">未关联订阅者。</p>
+  <% } %>
+</div>
+
+<div class="detail-actions">
+  <a href="/admin/users/<%= user._id %>/edit" class="btn btn-edit">编辑</a>
+  <button onclick="remove('<%= user._id %>')" class="btn btn-delete">删除</button>
+  <a href="/admin/users" class="btn btn-cancel">返回列表</a>
+</div>
+
+<script>
+async function remove(id) {
+  if (!confirm('确定要删除该用户吗？')) return;
+  var resp = await fetch('/admin/users/' + id, { method: 'DELETE' });
+  var result = await resp.json();
+  if (result.ok) window.location.href = result.redirect;
+}
+</script>
+
+<%- include('../_foot') %>

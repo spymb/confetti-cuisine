@@ -1,0 +1,55 @@
+<%- include('../_head') %>
+
+<h2 class="page-title">新建订阅者</h2>
+
+<div id="errorBox" class="error-box" style="display:none"></div>
+
+<form class="crud-form" id="createForm">
+  <div class="form-group">
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name"
+           placeholder="请输入姓名" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">邮箱</label>
+    <input type="email" id="email" name="email"
+           placeholder="your@email.com" required>
+  </div>
+
+  <div class="form-group">
+    <label for="zipCode">邮编（选填）</label>
+    <input type="text" id="zipCode" name="zipCode"
+           placeholder="5位数字，如 10001" maxlength="5">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="/admin/subscribers" class="btn btn-cancel">取消</a>
+  </div>
+</form>
+
+<script>
+document.getElementById('createForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  const resp = await fetch('/admin/subscribers', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const result = await resp.json();
+  if (result.ok) {
+    window.location.href = result.redirect;
+  } else if (result.errors) {
+    var box = document.getElementById('errorBox');
+    box.style.display = 'block';
+    box.innerHTML = result.errors.map(function(e) {
+      return '<p>' + (e.field ? '<strong>' + e.field + '</strong>：' : '') + e.message + '</p>';
+    }).join('');
+  }
+});
+</script>
+
+<%- include('../_foot') %>

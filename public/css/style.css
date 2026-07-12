@@ -301,6 +301,196 @@ main {
   background-color: #fef0ed;
 }
 
+/* ── 导航分隔符 ── */
+.nav-divider {
+  color: rgba(255, 255, 255, 0.4);
+  padding: 1rem 0.25rem;
+  user-select: none;
+}
+
+/* ── 工具栏 ── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* ── 通用按钮 ── */
+.btn {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.btn-view { background-color: #4a90d9; color: #fff; }
+.btn-view:hover { background-color: #3a7bc8; }
+
+.btn-edit { background-color: #f0a030; color: #fff; }
+.btn-edit:hover { background-color: #d99020; }
+
+.btn-delete { background-color: #d9534f; color: #fff; }
+.btn-delete:hover { background-color: #c9302c; }
+
+.btn-primary { background-color: #b33c2b; color: #fff; }
+.btn-primary:hover { background-color: #922b1f; }
+
+.btn-cancel { background-color: #999; color: #fff; }
+.btn-cancel:hover { background-color: #777; }
+
+/* ── 操作按钮组 ── */
+.action-group {
+  display: flex;
+  gap: 0.35rem;
+}
+
+/* ── CRUD 表格 ── */
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.crud-table thead {
+  background-color: #b33c2b;
+  color: #fff;
+}
+
+.crud-table th,
+.crud-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.crud-table tbody tr:nth-child(even) {
+  background-color: #fefaf5;
+}
+
+.crud-table tbody tr:hover {
+  background-color: #fef0ed;
+}
+
+.crud-table a {
+  color: #b33c2b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.crud-table a:hover {
+  text-decoration: underline;
+}
+
+/* ── CRUD 表单 ── */
+.crud-form {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.crud-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.crud-form .form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: #3d2c2c;
+}
+
+.crud-form .form-group input,
+.crud-form .form-group select,
+.crud-form .form-group textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d4c4c4;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.crud-form .form-group input:focus,
+.crud-form .form-group select:focus,
+.crud-form .form-group textarea:focus {
+  outline: none;
+  border-color: #b33c2b;
+  box-shadow: 0 0 0 3px rgba(179, 60, 43, 0.15);
+}
+
+.crud-form .form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ── 错误提示 ── */
+.error-box {
+  background: #fff0f0;
+  color: #b33c2b;
+  border: 1px solid #f5c6cb;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+
+.error-box p {
+  margin-bottom: 0.25rem;
+}
+
+.error-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── 详情卡片 ── */
+.detail-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.detail-card h1 {
+  color: #b33c2b;
+  margin-bottom: 1rem;
+}
+
+.detail-card dl {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.5rem 1rem;
+}
+
+.detail-card dt {
+  font-weight: 600;
+  color: #6b4e4e;
+}
+
+.detail-card dd {
+  margin: 0;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
 /* ── 响应式 ── */
 @media (max-width: 600px) {
   nav ul {

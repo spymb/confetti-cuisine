@@ -1,0 +1,48 @@
+<%- include('../_head') %>
+
+<div class="toolbar">
+  <h2 class="page-title">课程管理</h2>
+  <a href="/admin/courses/new" class="btn btn-primary">＋ 新建课程</a>
+</div>
+
+<% if (courses.length === 0) { %>
+  <p style="color: #6b4e4e;">暂无课程。</p>
+<% } else { %>
+  <table class="crud-table">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th>时长</th>
+        <th>价格</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% courses.forEach(function(c) { %>
+        <tr>
+          <td><a href="/admin/courses/<%= c._id %>"><%= c.title %></a></td>
+          <td><%= c.duration %></td>
+          <td>¥<%= c.cost %></td>
+          <td>
+            <div class="action-group">
+              <a href="/admin/courses/<%= c._id %>" class="btn btn-view">查看</a>
+              <a href="/admin/courses/<%= c._id %>/edit" class="btn btn-edit">编辑</a>
+              <button onclick="remove('<%= c._id %>')" class="btn btn-delete">删除</button>
+            </div>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
+
+<script>
+async function remove(id) {
+  if (!confirm('确定要删除该课程吗？')) return;
+  var resp = await fetch('/admin/courses/' + id, { method: 'DELETE' });
+  var result = await resp.json();
+  if (result.ok) window.location.href = result.redirect;
+}
+</script>
+
+<%- include('../_foot') %>
