@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ZodError } from 'zod';
 import Subscriber from '../models/Subscriber.js';
+import { formatZodError } from '../utils/formatZodError.js';
 import {
   createSubscriberSchema,
   updateSubscriberSchema,
@@ -14,13 +15,6 @@ import {
  * - zipCode 需要特殊处理空字符串
  * - 所有写操作统一 AJAX 模式
  * ================================================================================ */
-
-function formatZodError(err: ZodError): Array<{ field: string; message: string }> {
-  return err.issues.map((e) => ({
-    field: e.path.join('.'),
-    message: e.message,
-  }));
-}
 
 /* ── GET — 列表 ── */
 export async function getIndex(req: Request, res: Response): Promise<void> {

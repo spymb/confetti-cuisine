@@ -55,19 +55,27 @@
   <% } %>
 </div>
 
-<div class="detail-actions">
-  <a href="/admin/users/<%= user._id %>/edit" class="btn btn-edit">编辑</a>
-  <button onclick="remove('<%= user._id %>')" class="btn btn-delete">删除</button>
-  <a href="/admin/users" class="btn btn-cancel">返回列表</a>
-</div>
+<% if (locals.readOnly) { %>
+  <!-- 普通用户查看自己资料：只显示返回首页按钮，无编辑/删除 -->
+  <div class="detail-actions">
+    <a href="/" class="btn btn-cancel">返回首页</a>
+  </div>
+<% } else { %>
+  <!-- 管理员查看用户详情：显示编辑/删除按钮 -->
+  <div class="detail-actions">
+    <a href="/admin/users/<%= user._id %>/edit" class="btn btn-edit">编辑</a>
+    <button onclick="remove('<%= user._id %>')" class="btn btn-delete">删除</button>
+    <a href="/admin/users" class="btn btn-cancel">返回列表</a>
+  </div>
 
-<script>
-async function remove(id) {
-  if (!confirm('确定要删除该用户吗？')) return;
-  var resp = await fetch('/admin/users/' + id, { method: 'DELETE' });
-  var result = await resp.json();
-  if (result.ok) window.location.href = result.redirect;
-}
-</script>
+  <script>
+  async function remove(id) {
+    if (!confirm('确定要删除该用户吗？')) return;
+    var resp = await fetch('/admin/users/' + id, { method: 'DELETE' });
+    var result = await resp.json();
+    if (result.ok) window.location.href = result.redirect;
+  }
+  </script>
+<% } %>
 
 <%- include('../_foot') %>

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ZodError } from 'zod';
 import Course from '../models/Course.js';
+import { formatZodError } from '../utils/formatZodError.js';
 import {
   createCourseSchema,
   updateCourseSchema,
@@ -13,17 +14,6 @@ import {
  * 错误处理四分支：ZodError → ValidationError → 11000 → CastError。
  * 所有写操作统一 AJAX 模式（POST/PUT/DELETE → JSON 响应，前端执行跳转）。
  * ================================================================================ */
-
-/* ── Zod 错误格式化工具 ──
- * Zod 原生错误结构包含多层嵌套，这里提取为前端可直接消费的 {field, message} 数组，
- * 其中 field 对应表单字段名，用于在对应输入框旁定位显示错误消息。
- */
-function formatZodError(err: ZodError): Array<{ field: string; message: string }> {
-  return err.issues.map((e) => ({
-    field: e.path.join('.'),  // path 可能是 ['address','zipCode']，用 . 连接
-    message: e.message,
-  }));
-}
 
 /* ================================================================================
  * GET /admin/courses — 课程列表

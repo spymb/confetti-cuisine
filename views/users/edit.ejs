@@ -12,9 +12,10 @@
   </div>
 
   <div class="form-group">
-    <label for="email">邮箱</label>
+    <label for="email">邮箱（不可修改）</label>
     <input type="email" id="email" name="email"
-           value="<%= user.email %>" required>
+           value="<%= user.email %>" readonly>
+    <small style="color: #999;">邮箱是登录凭据，管理员不可修改。如需变更请直接操作数据库。</small>
   </div>
 
   <div class="form-group">

@@ -308,6 +308,14 @@ main {
   user-select: none;
 }
 
+/* ── 导航纯文字（欢迎提示） ── */
+.nav-text {
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 0.25rem;
+  font-weight: 500;
+  user-select: none;
+}
+
 /* ── 工具栏 ── */
 .toolbar {
   display: flex;
@@ -489,6 +497,48 @@ main {
   display: flex;
   gap: 0.75rem;
   margin-top: 1rem;
+}
+
+/* ── Flash 消息 ── */
+.flash {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  max-width: 960px;
+  font-weight: 500;
+}
+
+.flash-error {
+  background: #fff0f0;
+  color: #b33c2b;
+  border: 1px solid #f5c6cb;
+}
+
+.flash-success {
+  background: #f0fff0;
+  color: #2b7a2b;
+  border: 1px solid #c3e6c3;
+}
+
+/* ── 认证表单容器 ── */
+.auth-form-container {
+  max-width: 480px;
+}
+
+.auth-switch {
+  margin-top: 1.25rem;
+  color: #6b4e4e;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: #b33c2b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
 }
 
 /* ── 响应式 ── */

@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
 import Subscriber from '../models/Subscriber.js';
+import { formatZodError } from '../utils/formatZodError.js';
 import {
   createUserSchema,
   updateUserSchema,
@@ -17,13 +18,6 @@ import {
  * 3. putUpdate 手动构建 updateData：partial schema 下 undefined ≠ 不更新
  * 4. 所有写操作统一 AJAX 模式
  * ================================================================================ */
-
-function formatZodError(err: ZodError): Array<{ field: string; message: string }> {
-  return err.issues.map((e) => ({
-    field: e.path.join('.'),
-    message: e.message,
-  }));
-}
 
 /* ── 获取表单下拉选项 ──
  * 新建和编辑用户表单需要两个 <select>：

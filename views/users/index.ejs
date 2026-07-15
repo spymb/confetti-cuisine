@@ -2,7 +2,7 @@
 
 <div class="toolbar">
   <h2 class="page-title">用户管理</h2>
-  <a href="/admin/users/new" class="btn btn-primary">＋ 新建用户</a>
+  <!-- 新建用户按钮已移除：用户创建由 /register 接管，管理员不再代建账号 -->
 </div>
 
 <% if (users.length === 0) { %>
@@ -33,7 +33,7 @@
             <div class="action-group">
               <a href="/admin/users/<%= u._id %>" class="btn btn-view">查看</a>
               <a href="/admin/users/<%= u._id %>/edit" class="btn btn-edit">编辑</a>
-              <button onclick="remove('<%= u._id %>')" class="btn btn-delete">删除</button>
+              <button onclick="remove('<%= u._id %>', '<%- u.name %>', <%= (u.enrolledCourses && u.enrolledCourses.length) || 0 %>)" class="btn btn-delete">删除</button>
             </div>
           </td>
         </tr>
@@ -43,8 +43,12 @@
 <% } %>
 
 <script>
-async function remove(id) {
-  if (!confirm('确定要删除该用户吗？')) return;
+async function remove(id, name, courseCount) {
+  var msg = '确定删除用户「' + name + '」吗？';
+  if (courseCount > 0) {
+    msg += '\n该用户已报名 ' + courseCount + ' 门课程，删除后报名记录将丢失。';
+  }
+  if (!confirm(msg)) return;
   var resp = await fetch('/admin/users/' + id, { method: 'DELETE' });
   var result = await resp.json();
   if (result.ok) window.location.href = result.redirect;
