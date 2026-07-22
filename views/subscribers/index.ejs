@@ -1,35 +1,35 @@
 <%- include('../_head') %>
 
-<div class="toolbar">
-  <h2 class="page-title">订阅者管理</h2>
-  <a href="/admin/subscribers/new" class="btn btn-primary">＋ 新建订阅者</a>
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-3xl font-bold text-brand">订阅者管理</h1>
+  <a href="/admin/subscribers/new" class="inline-block px-4 py-2 bg-brand text-white no-underline rounded text-sm font-medium hover:bg-brand-dark transition-colors">＋ 新建订阅者</a>
 </div>
 
 <% if (subscribers.length === 0) { %>
-  <p style="color: #6b4e4e;">暂无订阅者。</p>
+  <p class="text-warm-muted">暂无订阅者。</p>
 <% } else { %>
-  <table class="crud-table">
+  <table class="w-full border-collapse bg-white rounded-lg shadow overflow-hidden mb-6">
     <thead>
-      <tr>
-        <th>姓名</th>
-        <th>邮箱</th>
-        <th>邮编</th>
-        <th>订阅时间</th>
-        <th>操作</th>
+      <tr class="bg-brand text-white">
+        <th class="px-4 py-3 text-left">姓名</th>
+        <th class="px-4 py-3 text-left">邮箱</th>
+        <th class="px-4 py-3 text-left">邮编</th>
+        <th class="px-4 py-3 text-left">订阅时间</th>
+        <th class="px-4 py-3 text-left">操作</th>
       </tr>
     </thead>
     <tbody>
       <% subscribers.forEach(function(sub) { %>
-        <tr>
-          <td><a href="/admin/subscribers/<%= sub._id %>"><%= sub.name %></a></td>
-          <td><%= sub.email %></td>
-          <td><%= sub.zipCode || '—' %></td>
-          <td><%= new Date(sub.createdAt).toLocaleString('zh-CN') %></td>
-          <td>
-            <div class="action-group">
-              <a href="/admin/subscribers/<%= sub._id %>" class="btn btn-view">查看</a>
-              <a href="/admin/subscribers/<%= sub._id %>/edit" class="btn btn-edit">编辑</a>
-              <button onclick="remove('<%= sub._id %>')" class="btn btn-delete">删除</button>
+        <tr class="even:bg-warm-bg hover:bg-brand-light transition-colors">
+          <td class="px-4 py-3"><a href="/admin/subscribers/<%= sub._id %>" class="text-brand no-underline font-medium hover:underline"><%= sub.name %></a></td>
+          <td class="px-4 py-3"><%= sub.email %></td>
+          <td class="px-4 py-3"><%= sub.zipCode || '—' %></td>
+          <td class="px-4 py-3"><%= new Date(sub.createdAt).toLocaleString('zh-CN') %></td>
+          <td class="px-4 py-3">
+            <div class="flex gap-1.5">
+              <a href="/admin/subscribers/<%= sub._id %>" class="inline-block px-3 py-1.5 bg-blue-500 text-white no-underline rounded text-sm hover:bg-blue-600 transition-colors">查看</a>
+              <a href="/admin/subscribers/<%= sub._id %>/edit" class="inline-block px-3 py-1.5 bg-amber-500 text-white no-underline rounded text-sm hover:bg-amber-600 transition-colors">编辑</a>
+              <button onclick="remove('<%= sub._id %>')" class="inline-block px-3 py-1.5 bg-red-500 text-white border-none rounded text-sm cursor-pointer hover:bg-red-600 transition-colors font-inherit">删除</button>
             </div>
           </td>
         </tr>

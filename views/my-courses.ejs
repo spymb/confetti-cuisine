@@ -1,0 +1,25 @@
+<%- include('_head') %>
+
+<h1 class="text-3xl font-bold text-brand mb-6">我的课程</h1>
+
+<% if (!enrolledCourses || enrolledCourses.length === 0) { %>
+  <div class="text-center py-12">
+    <p class="text-warm-muted mb-4">你还没有报名任何课程。</p>
+    <a href="/courses" class="inline-block px-8 py-3 bg-brand text-white no-underline text-lg rounded-md hover:bg-brand-dark transition-colors">去浏览课程</a>
+  </div>
+<% } else { %>
+  <div class="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
+    <% enrolledCourses.forEach(function(course) { %>
+      <div class="bg-white rounded-lg shadow p-6 border-t-4 border-brand">
+        <h3 class="text-brand font-bold text-xl mb-2"><%= course.title %></h3>
+        <p class="text-warm-muted mb-3"><%= course.description %></p>
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="inline-block px-3 py-1 bg-brand-light text-brand rounded-full text-xs font-medium"><%= course.duration %></span>
+          <span class="text-brand font-bold text-lg">¥<%= course.cost %></span>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('_foot') %>

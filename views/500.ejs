@@ -1,12 +1,12 @@
 <%- include('_head') %>
 
-<section class="error-page">
-  <h1>500</h1>
-  <p><%= message %></p>
+<section class="text-center py-16 px-4">
+  <h1 class="text-7xl font-bold text-brand mb-3">500</h1>
+  <p class="text-xl text-warm-muted mb-8"><%= message %></p>
   <% if (stack) { %>
-    <pre style="text-align: left; margin-top: 1rem; font-size: 0.85rem; color: #999; max-height: 200px; overflow-y: auto;"><%= stack %></pre>
+    <pre class="text-left mt-4 text-sm text-gray-400 max-h-48 overflow-y-auto"><%= stack %></pre>
   <% } %>
-  <a href="/" class="back-home">返回首页</a>
+  <a href="/" class="inline-block px-7 py-3 bg-brand text-white no-underline rounded-md hover:bg-brand-dark transition-colors">返回首页</a>
 </section>
 
 <%- include('_foot') %>

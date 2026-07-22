@@ -1,39 +1,39 @@
 <%- include('../_head') %>
 
-<div class="toolbar">
-  <h2 class="page-title">用户管理</h2>
-  <!-- 新建用户按钮已移除：用户创建由 /register 接管，管理员不再代建账号 -->
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-3xl font-bold text-brand">用户管理</h1>
+  <!-- 新建用户按钮已移除：用户创建由 /register 接管 -->
 </div>
 
 <% if (users.length === 0) { %>
-  <p style="color: #6b4e4e;">暂无用户。</p>
+  <p class="text-warm-muted">暂无用户。</p>
 <% } else { %>
-  <table class="crud-table">
+  <table class="w-full border-collapse bg-white rounded-lg shadow overflow-hidden mb-6">
     <thead>
-      <tr>
-        <th>姓名</th>
-        <th>邮箱</th>
-        <th>已报名课程</th>
-        <th>操作</th>
+      <tr class="bg-brand text-white">
+        <th class="px-4 py-3 text-left">姓名</th>
+        <th class="px-4 py-3 text-left">邮箱</th>
+        <th class="px-4 py-3 text-left">已报名课程</th>
+        <th class="px-4 py-3 text-left">操作</th>
       </tr>
     </thead>
     <tbody>
       <% users.forEach(function(u) { %>
-        <tr>
-          <td><a href="/admin/users/<%= u._id %>"><%= u.name %></a></td>
-          <td><%= u.email %></td>
-          <td>
+        <tr class="even:bg-warm-bg hover:bg-brand-light transition-colors">
+          <td class="px-4 py-3"><a href="/admin/users/<%= u._id %>" class="text-brand no-underline font-medium hover:underline"><%= u.name %></a></td>
+          <td class="px-4 py-3"><%= u.email %></td>
+          <td class="px-4 py-3">
             <% if (u.enrolledCourses && u.enrolledCourses.length) { %>
               <%= u.enrolledCourses.map(function(c) { return c.title; }).join('、') %>
             <% } else { %>
               —
             <% } %>
           </td>
-          <td>
-            <div class="action-group">
-              <a href="/admin/users/<%= u._id %>" class="btn btn-view">查看</a>
-              <a href="/admin/users/<%= u._id %>/edit" class="btn btn-edit">编辑</a>
-              <button onclick="remove('<%= u._id %>', '<%- u.name %>', <%= (u.enrolledCourses && u.enrolledCourses.length) || 0 %>)" class="btn btn-delete">删除</button>
+          <td class="px-4 py-3">
+            <div class="flex gap-1.5">
+              <a href="/admin/users/<%= u._id %>" class="inline-block px-3 py-1.5 bg-blue-500 text-white no-underline rounded text-sm hover:bg-blue-600 transition-colors">查看</a>
+              <a href="/admin/users/<%= u._id %>/edit" class="inline-block px-3 py-1.5 bg-amber-500 text-white no-underline rounded text-sm hover:bg-amber-600 transition-colors">编辑</a>
+              <button onclick="remove('<%= u._id %>', '<%- u.name %>', <%= (u.enrolledCourses && u.enrolledCourses.length) || 0 %>)" class="inline-block px-3 py-1.5 bg-red-500 text-white border-none rounded text-sm cursor-pointer hover:bg-red-600 transition-colors font-inherit">删除</button>
             </div>
           </td>
         </tr>

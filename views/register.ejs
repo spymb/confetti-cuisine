@@ -1,48 +1,52 @@
 <%- include('_head') %>
 
-<h2 class="page-title">注册</h2>
+<h1 class="text-3xl font-bold text-brand mb-6">注册</h1>
 
-<div class="auth-form-container">
-  <form class="crud-form" action="/register" method="POST">
-    <div class="form-group">
-      <label for="name">姓名</label>
+<div class="max-w-md">
+  <form class="bg-white rounded-lg shadow p-8" action="/register" method="POST">
+    <div class="mb-5">
+      <label for="name" class="block font-semibold mb-1.5 text-warm-text">姓名</label>
       <input type="text" id="name" name="name"
              value="<%= formData && formData.name || '' %>" required
              placeholder="请输入姓名"
-             autocomplete="name">
+             autocomplete="name"
+             class="w-full px-3 py-2.5 border border-gray-300 rounded text-base font-inherit transition-colors focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15">
     </div>
 
-    <div class="form-group">
-      <label for="email">邮箱</label>
+    <div class="mb-5">
+      <label for="email" class="block font-semibold mb-1.5 text-warm-text">邮箱</label>
       <input type="email" id="email" name="email"
              value="<%= formData && formData.email || '' %>" required
              placeholder="请输入邮箱地址"
-             autocomplete="email">
+             autocomplete="email"
+             class="w-full px-3 py-2.5 border border-gray-300 rounded text-base font-inherit transition-colors focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15">
     </div>
 
-    <div class="form-group">
-      <label for="password">密码</label>
+    <div class="mb-5">
+      <label for="password" class="block font-semibold mb-1.5 text-warm-text">密码</label>
       <input type="password" id="password" name="password"
              required
              placeholder="至少6个字符"
-             autocomplete="new-password">
+             autocomplete="new-password"
+             class="w-full px-3 py-2.5 border border-gray-300 rounded text-base font-inherit transition-colors focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15">
     </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">确认密码</label>
+    <div class="mb-5">
+      <label for="confirmPassword" class="block font-semibold mb-1.5 text-warm-text">确认密码</label>
       <input type="password" id="confirmPassword" name="confirmPassword"
              required
              placeholder="请再次输入密码"
-             autocomplete="new-password">
+             autocomplete="new-password"
+             class="w-full px-3 py-2.5 border border-gray-300 rounded text-base font-inherit transition-colors focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15">
     </div>
 
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">注册</button>
+    <div class="flex gap-3 mt-6">
+      <button type="submit" class="inline-block px-4 py-2 bg-brand text-white border-none rounded text-sm font-medium cursor-pointer hover:bg-brand-dark transition-colors font-inherit">注册</button>
     </div>
   </form>
 
-  <p class="auth-switch">
-    已有账号？<a href="/login">立即登录 →</a>
+  <p class="mt-5 text-warm-muted text-center">
+    已有账号？<a href="/login" class="text-brand no-underline font-medium hover:underline">立即登录 →</a>
   </p>
 </div>
 

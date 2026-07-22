@@ -1,0 +1,14 @@
+<!-- 课程浏览模态框 — 默认隐藏 -->
+<div id="courseModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[85vh] overflow-y-auto">
+    <!-- 标题栏 -->
+    <div class="flex justify-between items-center p-6 border-b">
+      <h2 class="text-2xl font-bold text-brand">课程列表</h2>
+      <button onclick="closeCourseModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+    </div>
+    <!-- 课程卡片容器（JS 动态填充） -->
+    <div id="modalCourseList" class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <p class="text-warm-muted col-span-2 text-center py-8">加载中…</p>
+    </div>
+  </div>
+</div>

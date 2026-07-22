@@ -7,8 +7,11 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
+import swaggerUi from 'swagger-ui-express';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import passport from './config/passport.js';
+import { swaggerSpec } from './config/swagger.js';
+import apiV1Router from './routes/api/v1/index.js';
 import router from './routes/index.js';
 import { notFound, internalError } from './controllers/errorController.js';
 
@@ -54,8 +57,10 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
         scriptSrcAttr: ["'unsafe-inline'"],
+        imgSrc: ["'self'", "data:"],
+        connectSrc: ["'self'"],
       },
     },
   }),
@@ -116,7 +121,13 @@ app.use((req, res, next) => {
   next();
 });
 
-/* ── 路由 ── */
+/* ── API v1 路由 ── */
+app.use('/api/v1', apiV1Router);
+
+/* ── Swagger 文档 ── */
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/* ── 页面路由 ── */
 app.use(router);
 
 /* ── 错误处理（顺序敏感：404 在先，500 在后） ── */

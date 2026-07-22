@@ -1,23 +1,23 @@
 <%- include('../_head') %>
 
-<div class="detail-card">
-  <h1><%= subscriber.name %></h1>
+<div class="bg-white rounded-lg shadow p-8 mb-6">
+  <h1 class="text-brand text-2xl font-bold mb-4"><%= subscriber.name %></h1>
 
-  <dl>
-    <dt>邮箱</dt>
+  <dl class="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2">
+    <dt class="font-semibold text-warm-muted">邮箱</dt>
     <dd><%= subscriber.email %></dd>
-    <dt>邮编</dt>
+    <dt class="font-semibold text-warm-muted">邮编</dt>
     <dd><%= subscriber.zipCode || '—' %></dd>
-    <dt>订阅时间</dt>
+    <dt class="font-semibold text-warm-muted">订阅时间</dt>
     <dd><%= new Date(subscriber.createdAt).toLocaleString('zh-CN') %></dd>
-    <dt>更新时间</dt>
+    <dt class="font-semibold text-warm-muted">更新时间</dt>
     <dd><%= new Date(subscriber.updatedAt).toLocaleString('zh-CN') %></dd>
   </dl>
 
-  <div class="detail-actions">
-    <a href="/admin/subscribers/<%= subscriber._id %>/edit" class="btn btn-edit">编辑</a>
-    <button onclick="remove('<%= subscriber._id %>')" class="btn btn-delete">删除</button>
-    <a href="/admin/subscribers" class="btn btn-cancel">返回列表</a>
+  <div class="flex gap-3 mt-4">
+    <a href="/admin/subscribers/<%= subscriber._id %>/edit" class="inline-block px-3 py-1.5 bg-amber-500 text-white no-underline rounded text-sm hover:bg-amber-600 transition-colors">编辑</a>
+    <button onclick="remove('<%= subscriber._id %>')" class="inline-block px-3 py-1.5 bg-red-500 text-white border-none rounded text-sm cursor-pointer hover:bg-red-600 transition-colors font-inherit">删除</button>
+    <a href="/admin/subscribers" class="inline-block px-3 py-1.5 bg-gray-400 text-white no-underline rounded text-sm hover:bg-gray-500 transition-colors">返回列表</a>
   </div>
 </div>
 

@@ -1,17 +1,17 @@
 <%- include('_head') %>
 
-<h2 class="page-title">我们的课程</h2>
-<p style="margin-bottom: 1.5rem; color: #6b4e4e;">
+<h1 class="text-3xl font-bold text-brand mb-6">我们的课程</h1>
+<p class="mb-6 text-warm-muted">
   探索丰富多彩的实操烹饪课程，所有级别均可报名！
 </p>
 
-<div class="courses">
+<div class="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
   <% courses.forEach(function(course) { %>
-    <article class="course-card">
-      <h3><%= course.title %></h3>
-      <p><%= course.description %></p>
-      <span class="duration"><%= course.duration %></span>
-      <span class="cost">¥<%= course.cost %></span>
+    <article class="bg-white rounded-lg shadow p-6 border-t-4 border-brand hover:-translate-y-1 hover:shadow-lg transition-all">
+      <h3 class="text-brand font-bold text-xl mb-2"><%= course.title %></h3>
+      <p class="text-warm-muted mb-3"><%= course.description %></p>
+      <span class="inline-block mt-3 px-3 py-1 bg-brand-light text-brand rounded-full text-xs font-medium"><%= course.duration %></span>
+      <span class="inline-block mt-2 ml-2 text-lg font-bold text-brand">¥<%= course.cost %></span>
     </article>
   <% }); %>
 </div>

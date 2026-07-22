@@ -6,6 +6,7 @@ import {
   postSubscribe,
 } from '../controllers/homeController.js';
 import { getUserProfile } from '../controllers/profileController.js';
+import { getMyCourses } from '../controllers/myCoursesController.js';
 import { ensureAuthenticated, isAdmin } from '../middleware/auth.js';
 import authRoutes from './authRoutes.js';
 import userRoutes from './userRoutes.js';
@@ -56,7 +57,9 @@ router.get('/contact', getContact); // 联系我们（含订阅表单）
 // 访客通过 /contact 页面的表单订阅
 router.post('/subscribe', postSubscribe);
 
-/* ──────────── 用户自我资料（仅登录） ──────────── */
+/* ──────────── 用户自我服务（仅登录） ──────────── */
+// 查看自己的已报名课程
+router.get('/my-courses', ensureAuthenticated, getMyCourses);
 // 普通用户看自己的资料，管理员可看任意用户的资料（复用 show.ejs + readOnly）
 router.get('/users/:id', ensureAuthenticated, getUserProfile);
 

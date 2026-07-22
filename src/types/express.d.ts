@@ -23,5 +23,8 @@ declare module 'express' {
      */
     flash(type: string, message?: string): string[];
     flash(type: string, message: string): number;
+
+    /** JWT 中间件 requireJWT 验证通过后挂载的载荷 */
+    jwtPayload?: { userId: string; email: string; role: string };
   }
 }
