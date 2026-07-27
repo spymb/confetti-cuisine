@@ -1,0 +1,50 @@
+<%- include('_head') %>
+
+<div class="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto">
+  <!-- 系统通知区 -->
+  <div id="chat-notification" class="hidden text-center text-sm text-warm-muted py-1 transition-all"></div>
+
+  <!-- 在线状态栏 -->
+  <div class="flex items-center justify-between mb-3 px-2">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 bg-green-500 rounded-full inline-block"></span>
+      <span class="text-sm text-warm-muted">已连接</span>
+    </div>
+    <div class="text-xs text-warm-muted">
+      <span id="online-count">1</span> 人在线
+    </div>
+  </div>
+
+  <!-- 消息列表 -->
+  <div
+    id="chat-messages"
+    class="flex-1 overflow-y-auto space-y-3 mb-4 px-2 py-2 bg-white/50 rounded-lg border border-gray-100"
+  >
+    <!-- 由 JS 动态渲染 -->
+  </div>
+
+  <!-- 输入区域 -->
+  <form id="chat-form" class="flex gap-3 pb-4">
+    <input
+      id="chat-input"
+      type="text"
+      placeholder="输入消息…"
+      autofocus
+      autocomplete="off"
+      maxlength="500"
+      class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none transition-shadow"
+    >
+    <button
+      id="chat-send-btn"
+      type="submit"
+      class="px-6 py-3 bg-brand text-white font-medium rounded-lg hover:bg-brand-dark transition-colors cursor-pointer border-none shadow-sm active:scale-95"
+    >
+      发送
+    </button>
+  </form>
+</div>
+
+<!-- 隐藏的未读状态标记（跨标签页通信用） -->
+<span id="chat-nav-icon" class="hidden"></span>
+
+<%- include('_foot') %>

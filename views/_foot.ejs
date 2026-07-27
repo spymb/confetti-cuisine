@@ -1,4 +1,8 @@
   </main>
-  <script src="/public/js/main.js" defer></script>
+  <% if (locals.pageScript) { %>
+    <%- `<script src="${locals.pageScript.src}"${locals.pageScript.type ? ` type="${locals.pageScript.type}"` : ''}></script>` %>
+  <% } else { %>
+    <script src="/public/js/main.js" defer></script>
+  <% } %>
 </body>
 </html>

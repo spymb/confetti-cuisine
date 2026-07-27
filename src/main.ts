@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import path from 'node:path';
+import { createServer } from 'node:http';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -11,6 +12,7 @@ import swaggerUi from 'swagger-ui-express';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import passport from './config/passport.js';
 import { swaggerSpec } from './config/swagger.js';
+import { setupChat } from './chat/index.js';
 import apiV1Router from './routes/api/v1/index.js';
 import router from './routes/index.js';
 import { notFound, internalError } from './controllers/errorController.js';
@@ -51,6 +53,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 /* ── 安全头中间件 ── */
 // CSP：default 只允许同源；EJS 模板中有内联 <script> 和 onclick，因此放行 script/style 的内联
+// connectSrc 添加 ws:/wss: 以支持 Socket.io WebSocket 连接
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -60,30 +63,29 @@ app.use(
         scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
         scriptSrcAttr: ["'unsafe-inline'"],
         imgSrc: ["'self'", "data:"],
-        connectSrc: ["'self'"],
+        connectSrc: ["'self'", "ws:", "wss:"],
       },
     },
   }),
 );
 
 /* ── 会话中间件（MongoDB 存储） ── */
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
-    resave: false,                         // 不强制每次请求都重新保存
-    saveUninitialized: false,              // 未修改的会话不存储（避免空 session）
-    store: MongoStore.create({
-      mongoUrl: uri,
-      ttl: 14 * 24 * 60 * 60,             // 14 天过期
-    }),
-    cookie: {
-      httpOnly: true,                      // 浏览器 JS 不可读取
-      secure: isProduction,                // 生产环境仅 HTTPS
-      sameSite: 'lax',                     // 跨站 GET 导航发送 cookie，POST 不发送
-      maxAge: 14 * 24 * 60 * 60 * 1000,    // 14 天（毫秒）
-    },
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
+  resave: false,                         // 不强制每次请求都重新保存
+  saveUninitialized: false,              // 未修改的会话不存储（避免空 session）
+  store: MongoStore.create({
+    mongoUrl: uri,
+    ttl: 14 * 24 * 60 * 60,             // 14 天过期
   }),
-);
+  cookie: {
+    httpOnly: true,                      // 浏览器 JS 不可读取
+    secure: isProduction,                // 生产环境仅 HTTPS
+    sameSite: 'lax',                     // 跨站 GET 导航发送 cookie，POST 不发送
+    maxAge: 14 * 24 * 60 * 60 * 1000,    // 14 天（毫秒）
+  },
+});
+app.use(sessionMiddleware);
 
 /* ── Passport 初始化 ── */
 app.use(passport.initialize());
@@ -134,6 +136,10 @@ app.use(router);
 app.use(notFound); // 全路由未命中 → 404
 app.use(internalError); // 任何错误（含 Express 5 自动传播的异步错误）→ 500
 
+/* ── HTTP Server + Socket.io 聊天 ── */
+const server = createServer(app);
+setupChat(server, sessionMiddleware);
+
 /* ──────────── MongoDB 连接与服务器启动 ──────────── */
 
 try {
@@ -150,7 +156,7 @@ if (process.argv.includes('--seed')) {
   await seedDemo();
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`\n🍳 缤纷厨房已启动 → http://localhost:${PORT}`);
   console.log(`   启动时间：${new Date().toISOString()}`);
   console.log(`   按 Ctrl+C 停止\n`);

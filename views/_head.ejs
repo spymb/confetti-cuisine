@@ -17,6 +17,24 @@
       }
     }
   </script>
+  <style>
+    /* 聊天未读闪烁动画 */
+    @keyframes chat-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .chat-unread {
+      animation: chat-blink 1s ease-in-out infinite;
+    }
+    /* 消息淡入动画 */
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.3s ease-out;
+    }
+  </style>
 </head>
 <body class="font-sans leading-relaxed text-warm-text bg-warm-bg min-h-screen flex flex-col">
 
@@ -36,6 +54,7 @@
         <li><a href="/admin/users" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'users' ? 'bg-white/20' : '' %>">用户管理</a></li>
         <li><a href="/admin/courses" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'courses-admin' ? 'bg-white/20' : '' %>">课程管理</a></li>
         <li><a href="/admin/subscribers" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'subscribers' ? 'bg-white/20' : '' %>">订阅管理</a></li>
+        <li><a href="/chat" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'chat' ? 'bg-white/20' : '' %>">💬 聊天室</a></li>
         <li class="text-white/40 px-1 py-4 select-none">|</li>
         <li class="text-white/80 px-1 py-4 font-medium select-none">欢迎，<%= locals.user.name %></li>
         <li><a href="/logout" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors">登出</a></li>
@@ -45,6 +64,7 @@
         <li><a href="/courses" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'courses' ? 'bg-white/20' : '' %>">课程</a></li>
         <li><a href="/my-courses" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'my-courses' ? 'bg-white/20' : '' %>">我的课程</a></li>
         <li><a href="/users/<%= locals.user._id %>" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'profile' ? 'bg-white/20' : '' %>">个人资料</a></li>
+        <li><a href="/chat" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors <%- currentPage === 'chat' ? 'bg-white/20' : '' %>">💬 聊天室</a></li>
         <li class="text-white/40 px-1 py-4 select-none">|</li>
         <li class="text-white/80 px-1 py-4 font-medium select-none">欢迎，<%= locals.user.name %></li>
         <li><a href="/logout" class="inline-block px-5 py-4 text-white no-underline font-medium rounded hover:bg-white/15 transition-colors">登出</a></li>

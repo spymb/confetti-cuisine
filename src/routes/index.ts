@@ -7,6 +7,7 @@ import {
 } from '../controllers/homeController.js';
 import { getUserProfile } from '../controllers/profileController.js';
 import { getMyCourses } from '../controllers/myCoursesController.js';
+import { getChat } from '../controllers/chatController.js';
 import { ensureAuthenticated, isAdmin } from '../middleware/auth.js';
 import authRoutes from './authRoutes.js';
 import userRoutes from './userRoutes.js';
@@ -60,6 +61,8 @@ router.post('/subscribe', postSubscribe);
 /* ──────────── 用户自我服务（仅登录） ──────────── */
 // 查看自己的已报名课程
 router.get('/my-courses', ensureAuthenticated, getMyCourses);
+// 聊天室（仅登录）
+router.get('/chat', ensureAuthenticated, getChat);
 // 普通用户看自己的资料，管理员可看任意用户的资料（复用 show.ejs + readOnly）
 router.get('/users/:id', ensureAuthenticated, getUserProfile);
 
