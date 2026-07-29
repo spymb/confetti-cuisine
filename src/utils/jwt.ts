@@ -7,6 +7,16 @@ import jwt from 'jsonwebtoken';
  * - verifyToken：验证并解码 JWT，失败时抛出异常（调用方自行 catch）。
  * ================================================================================ */
 
+// 生产环境必须显式配置 JWT_SECRET —— 默认密钥是公开的，
+// 任何人都能伪造 token，静默回退等于没有认证
+if (
+  process.env.NODE_ENV === 'production' &&
+  (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'dev-jwt-secret-change-in-production')
+) {
+  console.error('❌ 生产环境缺少 JWT_SECRET（或仍在使用开发默认值），进程退出');
+  process.exit(1);
+}
+
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-jwt-secret-change-in-production';
 const JWT_EXPIRES_IN = '24h';
 

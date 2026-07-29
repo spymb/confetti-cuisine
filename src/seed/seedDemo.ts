@@ -9,10 +9,10 @@
  *   daming@example.com / password123
  * ================================================================================ */
 
+import { pathToFileURL } from 'node:url';
 import Course from '../models/Course.js';
 import User from '../models/User.js';
 import Subscriber from '../models/Subscriber.js';
-
 /**
  * 灌入演示数据（需要已连接的 mongoose）。
  * 幂等：先清空三张表再灌入，多次运行结果一致。
@@ -67,5 +67,35 @@ export async function seedDemo(): Promise<void> {
     enrolledCourses: [courses[4]._id],
   });
   console.log('✅ 灌入 3 位用户（含 1 位管理员）');
+}
+
+/* ── 独立运行入口（pnpm seed） ──
+ * 判断是否作为主模块直接执行：tsx/node 运行本文件时，
+ * process.argv[1] 指向本文件路径，与 import.meta.url 一致。
+ */
+const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isDirectRun) {
+  const { default: mongoose } = await import('mongoose');
+  const { config: loadEnv } = await import('dotenv');
+  loadEnv();
+
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    console.error('❌ 独立运行种子脚本需要 MONGODB_URI（内存实例重启即丢数据，灌它没意义）');
+    process.exit(1);
+  }
+
+  try {
+    await mongoose.connect(uri);
+    console.log('✅ MongoDB connected');
+    await seedDemo();
+    console.log('🌱 种子数据灌入完成');
+  } catch (err) {
+    console.error('❌ 种子数据灌入失败:', err);
+    process.exitCode = 1;
+  } finally {
+    await mongoose.disconnect();
+  }
 }
 

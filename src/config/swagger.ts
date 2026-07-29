@@ -16,9 +16,14 @@ const options: swaggerJsdoc.Options = {
       description: 'Confetti Cuisine — 烹饪学校 RESTful API 文档',
     },
     servers: [
+      // 相对路径：始终指向当前访问的域名，开发/生产通用
+      {
+        url: '/',
+        description: '当前服务器',
+      },
       {
         url: 'http://localhost:3000',
-        description: '开发服务器',
+        description: '本地开发服务器',
       },
     ],
     components: {

@@ -4,11 +4,15 @@
   "description": "Confetti Cuisine — a cooking school website built with Express 5.x and EJS",
   "packageManager": "pnpm@11.11.0",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "dev:seed": "tsx watch src/main.ts --seed",
     "build": "tsc",
-    "start": "cross-env NODE_ENV=production node dist/main.js",
+    "start": "node dist/main.js",
+    "seed": "tsx src/seed/seedDemo.ts",
     "swagger": "tsx src/config/swagger.ts"
   },
   "devDependencies": {
